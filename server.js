@@ -23,8 +23,23 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     const foodsCollection = client.db("foodBlog").collection("foodItems");
+    const userCollection = client.db("foodBlog").collection("users");
     const reviewCollection = client.db("foodBlog").collection("review");
     const cartCollection = client.db("foodBlog").collection("carts");
+
+    // Users Related API
+    app.post("/users", async(req,res)=>{
+      const user = req.body;
+               //Code for googleSignIn
+      const query = {email: user.email}
+      const existingUser = await userCollection.findOne(query);
+      if(existingUser) {
+       return res.send({message: "user already exists"})
+      }
+                //-----End-------//
+      const result = await userCollection.insertOne(user);
+      res.send(result);
+    })
 
 
     // Food Item related apis
