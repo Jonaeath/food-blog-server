@@ -41,6 +41,12 @@ async function run() {
       res.send(result);
     })
 
+    //  Display all users on dashboard
+    app.get("/users", async(req,res)=>{
+      const result = await userCollection.find().toArray();
+      res.send(result)
+    })
+
 
     // Food Item related apis
     app.get("/foods", async (req, res) => {
