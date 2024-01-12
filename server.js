@@ -89,6 +89,14 @@ async function run() {
       res.send(result);
     })
 
+    //Delete User
+    app.delete("/delete/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await userCollection.deleteOne(query);
+      res.send(result);
+    });
+
     // Food Item related apis
     app.get("/foods", async (req, res) => {
       const result = await foodsCollection.find().toArray();
